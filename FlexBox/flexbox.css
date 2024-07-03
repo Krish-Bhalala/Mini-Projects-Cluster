@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.menu-container {
+    color: #fff;
+    background-color: #5995da; /* Blue */
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.menu {
+    width: 900px;
+    display: flex;
+    justify-content: space-between; /* distributes text inside menu item evenly */
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.login {
+    margin-left: 20px;
+}
+/* the page should make the items spread out equally through our menu. We can replicate the desired layout by sticking an auto-margin between the items we want to separate */
+/* Auto-margins eat up all the extra space in a flex container, so instead of distributing items equally, this moves the .signup and any following items (.login) to the right side of the container. This will give you the exact same layout we had before, but without that extra nested <div> to group them.  */
+.signup {
+    margin-left: auto;
+}
+
+.header-container {
+    color: #5995da;
+    background-color: #d6e9fe;
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    width: 900px;
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social,
+.subscribe {
+    align-self: flex-end; /* overrides parent alignitems */
+    margin-bottom: 20px;
+}
+
+.photo-grid-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* .photo-grid {
+    width: 900px;
+    display: flex;
+    justify-content: center;  this will align items based on flex direction
+    align-items: center;  aligns items horizontally
+    flex-wrap: wrap;
+    flex-direction: column;
+} */
+
+/* .photo-grid {
+    width: 900px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row-reverse; reverses rendering row wise
+    align-items: center;
+} */
+
+.photo-grid {
+    width: 900px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+}
+
+.photo-grid-item {
+    border: 1px solid #fff;
+    width: 300px;
+    height: 300px;
+}
+
+/* Adding an order property to a flex item defines its order in the container without affecting surrounding items.
+Its default value is 0, and increasing or decreasing it from there moves the item to the right or left, respectively.  */
+.first-item {
+    order: 1; /* moves this item to left by 1 item*/
+}
+
+.last-item {
+    order: -1; /* moves this item to right by 1 item*/
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-item {
+    border: 1px solid #fff;
+    background-color: #d6e9fe;
+    height: 200px;
+    /* tells the items to stretch to match the width of .footer. Since they all have the same weight, they’ll stretch equally:  */
+    flex: 1;
+}
+/* Compare this to the justify-content property, which distributes extra space between items. This is similar, but now we’re distributing that space into the items themselves. The result is full control over how flex items fit into their containers. */
+/* .footer-three {
+    flex: 2;
+} */
+
+/* Without that flex: initial; line, the flex: 1; declaration would be inherited from the .footer-item rule, causing the width properties to be ignored. initial fixes this, and we get a flexible layout that also contains fixed-width items. When you resize the browser window, you’ll see that only the middle box in the footer gets resized.  */
+.footer-one,
+.footer-three {
+    background-color: #5995da;
+    flex: initial;
+    width: 300px;
+}

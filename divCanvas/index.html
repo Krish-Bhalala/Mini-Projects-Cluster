@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>.divCanvas</title>
+        <script defer src="app.js"></script>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <h1>.divCanvas</h1>
+        <div class="board">
+            <div class="controls">
+                <input type="color" value="#123456" id="colorPicker" />
+                <button id="colorMode">Color Mode</button>
+                <button id="blackMode">B/W Mode</button>
+                <button id="eraserMode">Eraser</button>
+                <button id="clearCanvas">Clear</button>
+                <p id="dimensions">3x3</p>
+                <input
+                    type="range"
+                    min="1"
+                    max="100"
+                    value="16"
+                    id="dimensionSlider"
+                />
+            </div>
+            <div class="canvas"></div>
+        </div>
+    </body>
+</html>
