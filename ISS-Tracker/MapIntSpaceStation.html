@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <title>Map International Space Station</title>
+</head>
+<style>
+    #map {
+        height: 500px;
+    }
+</style>
+<body>
+    <h1>International Space Station Location</h1>
+    <p>
+        longitude: <span id = "longitude"></span><br>
+        latitude: <span id = "latitude"></span>
+    </p>
+
+    <div id="map"></div>
+    <script>
+        const apiURL = "https://api.wheretheiss.at/v1/satellites/25544";
+
+        //creates map on DOM element with ID "map"
+        const map = L.map('map').setView([0, 0], 4);
+        //adds text at bottom right corner
+        const attribution ='LIVE';
+        //map tiles texture URl
+        const tileURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+        //creating the tile texture
+        const tiles = L.tileLayer(tileURL, { attribution });
+        //adding the tile texture to the map
+        tiles.addTo(map);
+
+        //Adds the scale of the map
+        L.control.scale().addTo(map);
+
+        //adding the icon
+        let aspectRatio = 1.44;
+        let iconHeight = 82;
+        let iconWidth = aspectRatio*iconHeight;
+        var myIcon = L.icon({
+            iconUrl: 'spaceStation.png',
+            iconSize: [iconWidth, iconHeight],
+            //specifying where to fix the icon with respect to marker
+            iconAnchor: [iconWidth/2, iconHeight/2],
+        });
+
+        //creating marker with the icon and adding it to the map
+        const marker = L.marker([0, 0], {icon: myIcon}).addTo(map);
+
+        
+
+
+        //gets the LIVE data about space station
+        let coordinates = [];
+        async function getData(){
+            
+
+            const response = await fetch(apiURL);
+            const data = await response.json();
+
+            //converts the json string variable into js variable for easy use
+            const {longitude, latitude} = data;
+
+            //updating the DOM element with the new data
+            document.getElementById("longitude").innerText = longitude.toFixed(3) + "˚";
+            document.getElementById("latitude").innerText = latitude.toFixed(3) + "˚";
+            //console.log(data);
+
+            //updating the marker with respect to the new data
+            marker.setLatLng([latitude, longitude]);
+            //updating the map view to get the marker at the center of the screen
+            map.setView([latitude, longitude]);
+
+            //coordinates.push([latitude, longitude]);
+            coordinates.push([latitude,longitude]);
+
+            console.log(coordinates);
+
+            if(coordinates.length!==0){
+                let polyline = L.polyline(coordinates, {color:'red'}).addTo(map);
+            }
+            //map.fitBounds(polyline.getBounds());
+        }
+
+
+        //loading the data for the first time
+        getData();
+        //calls getData every second to update the data
+        setInterval(getData,1000);
+    </script>
+</body>
+</html>
